@@ -11,8 +11,7 @@ let buffer = require('vinyl-buffer');
 let istanbul = require('gulp-istanbul');
 
 let allSrcFiles = [
-  '**.js',
-  './app/**/*.js'
+  './lib/**/*.js'
 ];
 
 let allSrc = gulp.src(allSrcFiles);

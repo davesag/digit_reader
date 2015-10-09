@@ -39,8 +39,8 @@ let readImages = function(mode) {
           console.log("using", data.fileName, "for training as", data.fact);
           reader.train(data.image, data.fact);
         } else {
-          reader.predict(data.image, function(guess) {
-            console.log('Image:', data.fileName, 'is probably a', guess);
+          reader.predict(data.image, function(guess, chance) {
+            console.log('Image:', data.fileName, 'is probably a', guess, "chance is", chance);
           });          
         }
       })
@@ -48,8 +48,20 @@ let readImages = function(mode) {
   });
 }
 
-readImages('training');
+var go = function(count) {
+  if (count-- === 0) {
+    console.log('Finished');
+    return;
+  }
 
-setTimeout(function() {
-  readImages('predicting')
-}, 5000);
+  readImages('training');
+
+  setTimeout(function() {
+    readImages('predicting');
+    setTimeout(function() {
+      go(count);
+    }, 500);
+  }, 2500);
+}
+
+go(1);
