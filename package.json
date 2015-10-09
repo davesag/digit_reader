@@ -50,7 +50,6 @@
     "node": "4.1.x"
   },
   "dependencies": {
-    "canvas": "^1.2.9",
     "convnetjs": "^0.3.0",
     "png-js": "^0.1.1"
   }

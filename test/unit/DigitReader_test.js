@@ -104,15 +104,15 @@ describe('DigitReader', function() {
       describe('with overlapping options', function() {
         var options = {
           input: {
-            height: 64,
-            width: 64,
+            out_sx: 64,
+            out_sy: 64,
             aardvark: 'arthur'
           }
         };
         var label = 'input';
         var expected = {
-          height: 64,
-          width: 64
+          out_sx: 64,
+          out_sy: 64
         };
 
         it('returns the correct options', function() {
@@ -150,8 +150,8 @@ describe('DigitReader', function() {
           var options = {};
           var expected = {
             type: 'input',
-            height: 128,
-            width: 128,
+            out_sx: 128,
+            out_sy: 128,
             depth: 4
           };
 
