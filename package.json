@@ -50,6 +50,7 @@
     "node": "4.1.x"
   },
   "dependencies": {
+    "colors": "^1.1.2",
     "convnetjs": "^0.3.0",
     "png-js": "^0.1.1"
   }
