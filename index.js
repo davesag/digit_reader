@@ -17,9 +17,6 @@ let redisKey = "digit_reader_neural_network";
 
 client.get(redisKey, function(err, reply) {
     // reply is null when the key is missing
-  if (reply) {
-    console.log("found network", reply);
-  }
   let reader = new DigitReader({net: (reply) ? JSON.parse(reply) : null});
 
   let images = {
