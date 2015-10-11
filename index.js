@@ -1,7 +1,7 @@
 "use strict";
 
 let DigitReader = require('./lib/DigitReader');
-let ImageLoader = require('./lib/ImageLoader');
+let ImageUtils = require('./lib/ImageUtils');
 
 let fs = require('fs');
 
@@ -17,19 +17,15 @@ const PATHS = {
   predicting: __dirname + '/images/training/'
 };
 
-let getFactfromFileName = function(fileName) {
-  return parseInt(fileName.substr(fileName.lastIndexOf('_') + 1, 1));
-};
-
 let processImage = function(fileName, mode, next) {
   var imagePath = PATHS[mode] + fileName;
-  ImageLoader.load(imagePath, function(err, data) {
+  ImageUtils.load(imagePath, function(err, data) {
     if (err) {
       console.log("error loading", fileName, err);
       callback();
     } else {
       if (mode === 'training') {
-        data['fact'] = getFactfromFileName(fileName)
+        data['fact'] = ImageUtils.getFactfromFileName(fileName)
         console.log("using", data.fileName, "for training as", data.fact);
         reader.train(data.image, data.fact);
         next();
