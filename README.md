@@ -4,7 +4,7 @@ A machine-learning experiment using ConvNetJS.
 
 ## Preparation
 
-* Install [`cairo`](https://github.com/Automattic/node-canvas/wiki/_pages) `brew install cairo`
+* Install [`redis`](http://redis.io) `brew install redis`
 * `npm install`
 
 ## Training images
