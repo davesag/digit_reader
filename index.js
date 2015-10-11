@@ -4,6 +4,7 @@ let DigitReader = require('./lib/DigitReader');
 let ImageUtils = require('./lib/ImageUtils');
 
 let fs = require('fs');
+let colors = require('colors/safe');
 
 let reader = new DigitReader();
 
@@ -17,6 +18,8 @@ const PATHS = {
   predicting: __dirname + '/images/training/'
 };
 
+var matchCount = 0; // a global! cound do this more cleanly.
+
 let processImage = function(fileName, mode, next) {
   var imagePath = PATHS[mode] + fileName;
   ImageUtils.load(imagePath, function(err, data) {
@@ -24,14 +27,27 @@ let processImage = function(fileName, mode, next) {
       console.log("error loading", fileName, err);
       callback();
     } else {
+      data['fact'] = ImageUtils.getFactfromFileName(fileName)
       if (mode === 'training') {
-        data['fact'] = ImageUtils.getFactfromFileName(fileName)
         console.log("using", data.fileName, "for training as", data.fact);
         reader.train(data.image, data.fact);
         next();
       } else {
         reader.predict(data.image, function(guess, chance) {
-          console.log('Image:', data.fileName, 'is probably a', guess, "chance is", chance);
+          let confidence = 'might be a';
+          let colour = 'white';
+          if (guess == data.fact) {
+            colour = 'green';
+            matchCount++;
+          } else {
+            colour = 'red';
+          }
+          if (chance < 0.1) {
+            confidence = "probably isn't a";
+          }
+          if (chance > 0.5) confidence = 'is probably a';
+          if (chance > 0.9) confidence = 'is a';
+          console.log(colors[colour]("Image:" + data.fileName + ' ' + confidence + ' ' + guess + ". Chance is " + chance));
           next();
         });
       }
@@ -39,9 +55,9 @@ let processImage = function(fileName, mode, next) {
   })
 };
 
-
 let readImages = function(mode, callback) {
   var fileNames = [];
+  matchCount = 0;
   fs.readdirSync(PATHS[mode]).forEach(function(fileName) { 
     if (fileName.indexOf('.png') > 0) fileNames.push(fileName)
   });
@@ -60,18 +76,18 @@ let readImages = function(mode, callback) {
 }
 
 var go = function(count) {
-  if (count-- === 0) {
-    console.log('Finished');
-    return;
-  }
 
   readImages('training', function() {
-    console.log('done training')
+    console.log('training round', count, 'completed');
     readImages('predicting', function() {
-    console.log('done predicting')
-      go(count);
+      if (matchCount < 10) {
+        console.log(colors.red('Only correctly matched', matchCount, 'out of 10. Retraining.'));
+        go(++count);
+      } else {
+        console.log(colors.green('Neural Network is now trained.'));
+      }
     });
   });
 }
 
-go(10);
+go(0);
