@@ -152,7 +152,7 @@ describe('DigitReader', function() {
             type: 'input',
             out_sx: 128,
             out_sy: 128,
-            depth: 4
+            out_depth: 4
           };
 
           it('returns the defaults', function() {
