@@ -4,6 +4,7 @@ A machine-learning experiment using [ConvNetJS](http://cs.stanford.edu/people/ka
 
 ## Preparation
 
+* You need [NodeJS V4.2 or better](https://nodejs.org) `brew install nvm` then `nvm install 4.2`, or just `brew install node` should do it.
 * Install [`redis`](http://redis.io) `brew install redis`
 * `npm install`
 

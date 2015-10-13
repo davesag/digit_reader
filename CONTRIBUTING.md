@@ -2,7 +2,7 @@
 
 ## Development Environment
 
-* [Node.js v4.1.x](http://nodejs.org) — or `brew install nvm & nvm install 4.1` if you have [homebrew](http://brew.sh).
+* [Node.js v4.2.x](http://nodejs.org) — or `brew install nvm & nvm install 4.2` if you have [homebrew](http://brew.sh).
 * You might want to run this within a [Docker](http://docker.io) container or [Vagrant](http://www.vagrantbox.es) VM.
 
 ## Development Process
